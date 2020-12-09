@@ -18,7 +18,7 @@ public class RSAEncrypt {
             e.printStackTrace();
         }
         // Ignore punctuation
-        message = message.replaceAll("[^a-zA-Z ]", "").toLowerCase();
+        message = message.replaceAll("[^a-zA-Z ]", "");
 
         // Read public key text
         BigInteger E = BigInteger.ZERO;
@@ -58,8 +58,10 @@ public class RSAEncrypt {
                 int n;
                 if (c == ' ') {
                     n = 26;
-                } else {
+                } else if (c >= 'a' && c <= 'z') {
                     n = (int)c - (int)'a';
+                } else {
+                    n = (int)c - (int)'A' + 27;
                 }
                 if (n < 10) {
                     encodedBlock.append("0").append(n);
@@ -67,7 +69,7 @@ public class RSAEncrypt {
                     encodedBlock.append(n);
                 }
             }
-
+            System.out.println(encodedBlock);
             // Encrypt block
             BigInteger cipherBlock = new BigInteger(encodedBlock.toString()).modPow(E, N);
 

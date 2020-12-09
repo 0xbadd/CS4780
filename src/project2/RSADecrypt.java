@@ -48,13 +48,9 @@ public class RSADecrypt {
             String plaintextBlockStr = plaintextBlock.toString();
             if (plaintextBlockStr.length() < 6) {
                 int diff = 6 - plaintextBlockStr.length();
-                StringBuilder zeroPadding = new StringBuilder();
-                for (int i = 0; i < diff; i++) {
-                    zeroPadding.append("0");
-                }
-                plaintextBlockStr = zeroPadding + plaintextBlockStr;
+                plaintextBlockStr = "0".repeat(Math.max(0, diff)) + plaintextBlockStr;
             }
-;
+
             // Encode message block
             StringBuilder decodedBlock = new StringBuilder();
             while (plaintextBlockStr.length() > 0) {
@@ -71,6 +67,8 @@ public class RSADecrypt {
                 char c;
                 if (num == 26) {
                     c = ' ';
+                } else if (num >= 27) {
+                    c = (char)(num + 'A' - 27);
                 } else {
                     c = (char)(num + 'a');
                 }
