@@ -39,20 +39,20 @@ public class RSAEncrypt {
             e.printStackTrace();
         }
 
-        String encryptedMessage = "";
+        StringBuilder encryptedMessage = new StringBuilder();
         while (message.length() > 0) {
             // Get next block in message
             String blockStr;
             if (message.length() >= 4) {
                 blockStr = message.substring(0, 3);
-                message = message.substring(4);
+                message = message.substring(3);
             } else {
                 blockStr = message;
                 message = "";
             }
 
             // Encode message block
-            String encodedBlock = "";
+            StringBuilder encodedBlock = new StringBuilder();
             for (int i = 0; i < blockStr.length(); i++) {
                 char c = blockStr.charAt(i);
                 int n;
@@ -62,16 +62,16 @@ public class RSAEncrypt {
                     n = (int)c - (int)'a';
                 }
                 if (n < 10) {
-                    encodedBlock += "0" + n;
+                    encodedBlock.append("0").append(n);
                 } else {
-                    encodedBlock += String.valueOf(n);
+                    encodedBlock.append(n);
                 }
             }
 
             // Encrypt block
-            BigInteger cipherBlock = new BigInteger(encodedBlock).modPow(E, N);
+            BigInteger cipherBlock = new BigInteger(encodedBlock.toString()).modPow(E, N);
 
-            encryptedMessage += cipherBlock.toString() + " ";
+            encryptedMessage.append(cipherBlock.toString()).append(" ");
         }
 
 
