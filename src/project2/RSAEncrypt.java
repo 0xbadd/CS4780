@@ -69,7 +69,7 @@ public class RSAEncrypt {
                     encodedBlock.append(n);
                 }
             }
-            System.out.println(encodedBlock);
+
             // Encrypt block
             BigInteger cipherBlock = new BigInteger(encodedBlock.toString()).modPow(E, N);
 
